@@ -1,192 +1,123 @@
 # Omni
 
-A Claude Code plugin that turns a job posting into a tailored one-page resume and cover letter,
-both as PDF. It works from your master resume, follows the conventions of the field you are
-applying to, checks the result against resume screening software, and tracks every application.
+Omni writes a tailored resume and cover letter for each job you apply to. You give it one long
+document listing everything you have ever done, then paste a job posting. It hands back two
+one-page PDFs written for that posting.
 
-**Master resume**: one long file holding everything you have ever done. Each tailored resume picks
-from it. Nothing outside it ever appears on a resume.
+It runs inside [Claude Code](https://claude.com/claude-code), an AI assistant from Anthropic. You
+talk to it in plain English. No coding is involved.
 
-**ATS** (applicant tracking system): the software employers use to parse and rank resumes before a
-person reads them.
+## What you get for each job
 
-## What you get per posting
+- **A one-page resume** as a PDF, built from your most relevant experience.
+- **A one-page cover letter** as a PDF, built around the duties the posting stresses most.
+- **A briefing**: the requirements you meet, the ones you do not, anything that could disqualify
+  you, the deadline, and what the next hiring stage usually is.
+- **A tracker row** in `applications.csv`, which opens in Excel or Google Sheets.
 
-| File | Content |
-|---|---|
-| `<Company> <Role> Resume.pdf` | One-page resume tailored to the posting |
-| `<Company> Cover Letter.pdf` | One-page cover letter built from the posting's duties |
-| Matching `.html` files | Editable sources of both PDFs |
-| `applications.csv` | A tracker row with status, deadline, and salary |
+Omni never adds a skill, a job, or a number you did not give it.
 
-Each run ends with a briefing:
+## What you need
 
-- which requirements your resume covers, and with what evidence
-- which requirements you do not meet, and whether they are likely to screen you out
-- eligibility conditions to confirm (work authorization, GPA minimum, graduation window, license)
-- the deadline, plus documents the employer wants that the plugin cannot produce
-- the posted salary range and how to answer a salary question
-- what was left off the resume
-- what the next hiring stage usually is
+- **Claude Code.** Using it requires a paid Claude plan or API credits.
+- **A web browser.** Chrome, Edge, Brave, or Chromium. Omni uses it to create the PDFs.
+- **Python.** Most Mac and Linux computers have it. Windows users can get it from
+  [python.org](https://www.python.org/downloads/).
 
-## Requirements
+## Setup
 
-| Need | Notes |
-|---|---|
-| [Claude Code](https://claude.com/claude-code) | The plugin runs inside it. |
-| Python 3 | Runs the build script. No packages to install. |
-| A Chromium-family browser | Chrome, Chromium, Edge, or Brave. Renders the PDF. Flatpak builds work. |
-| poppler (optional) | Provides `pdftotext`. With it, the check reads the PDF the way an ATS parser does. |
+You do this once.
 
-## Install
+1. Install Claude Code from [claude.com/claude-code](https://claude.com/claude-code).
+2. Create a folder for your job search and open Claude Code in it.
+3. Type these two lines, pressing Enter after each:
 
-In Claude Code:
+   ```
+   /plugin marketplace add Theory-Y/omni
+   /plugin install omni@omni
+   ```
 
-```
-/plugin marketplace add Theory-Y/omni
-/plugin install omni@omni
-```
+## Step 1. Your master resume
 
-To try it without installing, clone the repository and start Claude Code with
-`claude --plugin-dir /path/to/omni`.
+A master resume is a private document listing everything you have ever done. Omni draws from it
+for every resume, so anything missing from it can never appear on one.
 
-## First run: your master resume
+Type `/omni:tailor-resume`. Omni asks for your master resume. Give it a Word document, a PDF, old
+resumes, a LinkedIn export, or notes typed into the chat. If you have nothing written, Omni
+interviews you.
 
-1. Make a folder for your job search and start Claude Code in it.
-2. Run `/omni:tailor-resume`.
-3. Hand over your master resume when asked. Any format works: Word, PDF, plain text, a LinkedIn
-   export, or several old resumes to merge.
+Include every job, project, club, skill, certification, and award, even ones you would normally
+cut. Numbers matter most:
 
-Put everything in it. The master is never sent to an employer, so length does not matter:
+> **Thin.** Helped with month-end accounting.
+>
+> **Useful.** Reconciled 38 vendor accounts during month-end close and found a $94,000 freight
+> overcharge that the company recovered.
 
-- every job, internship, contract, and part-time or unrelated role
-- every project, including class, personal, research, and competition work
-- every club, team, volunteer role, and leadership position
-- every skill, tool, language, certification, license, and test score
-- every award, scholarship, and publication
-- every number you remember: money, percentages, volumes, team sizes, rankings
+Omni then asks when you graduate, when you can start, where you are allowed to work, what pay you
+expect, and which skills you never want claimed. It saves everything in two plain text files,
+`master-resume.md` and `profile.md`. Edit them whenever something changes.
 
-No master resume yet? The plugin gives you a form to fill in, or interviews you section by section.
+## Step 2. Apply to a job
 
-The plugin then asks a few questions and saves two files in your folder:
-
-| File | Holds |
-|---|---|
-| `master-resume.md` | Your full history, in your own wording |
-| `profile.md` | Availability, work authorization, location, compensation, and the skills you do not want claimed |
-
-Edit either file by hand at any time. When you gain new experience, tell the plugin or add it to
-`master-resume.md` yourself.
-
-## Every application after that
-
-Paste a job posting or a link to one. Examples:
+Paste the job posting, or a link to it:
 
 ```
-Tailor my resume to this posting: <link>
+Tailor my resume to this job: https://example.com/careers/analyst
 ```
 
-```
-Here is a job description. Resume and cover letter please.
-<pasted text>
-```
+Omni checks whether anything disqualifies you, writes both documents, fits each to one page, adds
+the job to your tracker, and gives you the briefing.
+
+Read both PDFs before sending them. Ask for changes in plain words:
 
 ```
-I applied to the Acme analyst role today.
+Shorten the second bullet under my internship and bring back the case competition.
 ```
 
-The last one updates the tracker.
+## Step 3. Keep track
+
+Tell Omni when you apply or hear back, and it updates the tracker. Tell it about new experience
+too. It adds that to your master resume for every later application.
 
 ## Fields
 
-The template and the one-page limit stay the same in every field. Section order, the summary, and
-what counts as proof change.
+The page looks the same in every field. The section order and the evidence change.
 
-| Field | Sections | What leads |
-|---|---|---|
-| Tech | Summary, Education, Work Experience, Projects and Leadership, Skills | Shipped systems, scale, tools named as the posting names them |
-| Finance | Education, Work Experience, Leadership and Activities, Skills and Interests | Money handled, accuracy, analysis, certifications with exact status |
-| Investment banking | Education, Work Experience, Leadership and Activities, Skills and Interests | GPA, transaction experience with deal size, valuation work |
-| Consulting | Education, Work Experience, Leadership and Activities, Skills and Interests | Impact and leadership with measured results |
-| Anything else | Derived from the posting | The numbers that field trusts (quota, patients, campaigns, funds raised) |
-
-## Rules the plugin enforces
-
-- **One page** per document. The build script counts the pages.
-- **PDF output** every time.
-- **No invented content.** Every title, date, number, and skill comes from your master resume. A
-  requirement you do not meet is reported as a gap.
-- **Punctuation.** No em dashes, en dashes, semicolons, or colons in written text. The colon after
-  a bold label (`Coursework:`, skills categories) belongs to the template and stays.
-- **Plain wording.** The build script warns on phrases that read as AI-written, such as
-  "spearheaded" and "passionate".
-- **Never-claim list.** Skills you list in `profile.md` stay off every document, whatever the
-  posting asks for.
-
-## How screening is handled
-
-The resume template is a single column of real text with standard headings, which ATS parsers read
-without errors. For each posting the plugin:
-
-1. Collects the posting's keywords: role title, tools, methods, certifications.
-2. Places each one your master resume supports, in the posting's exact wording, beside the evidence.
-3. Extracts the text from the finished PDF and confirms each keyword is there.
-4. Reports the keywords you cannot honestly claim.
-
-The plugin refuses hidden text, white text, keyword stuffing, and instructions aimed at AI
-reviewers. Screening systems detect these and reject the application.
-
-No tool can promise a pass. Screening software differs by employer, and no writing style beats
-every AI-writing detector. Read both documents once before sending and change any line you would
-not say yourself.
-
-## Editing a document by hand
-
-Edit the `.html` file, then rebuild:
-
-```
-python3 /path/to/omni/skills/tailor-resume/scripts/build.py "Acme Analyst Resume.html" --keywords "variance analysis, SQL"
-```
-
-The script writes the PDF beside the HTML and prints `OK` or a list of errors. It exits 1 when the
-page count is not 1, a placeholder is unfilled, banned punctuation appears, or headings extract
-out of order. `--keywords` is optional.
-
-## Troubleshooting
-
-| Problem | Fix |
+| Field | What Omni puts forward |
 |---|---|
-| `no Chromium-family browser found` | Install Chrome, Chromium, Edge, or Brave, or pass `--browser /path/to/browser`. |
-| `python3` not found (Windows) | Use `python` instead. |
-| `pdftotext not installed` warning | Install poppler. The build still works without it, with a weaker text check. |
-| Resume runs to two pages | Ask the plugin to refit. It cuts the least relevant content first, then tightens spacing within fixed limits. |
-| A keyword is reported missing | Your master resume does not support it. Add the experience to `master-resume.md` if you have it. |
+| Tech | What you built, who used it, and the tools, named the way the posting names them |
+| Finance | Money you handled, accuracy, analysis, and certifications with their exact status |
+| Investment banking | GPA, deals with their size, valuation work, and specific interests |
+| Consulting | Problems you solved, people you led, and results with numbers |
+| Everything else | The numbers your field trusts, such as sales against quota or funds raised |
 
-## Privacy
+Tech resumes open with a short summary. Finance, banking, and consulting resumes open with
+Education.
 
-The plugin makes no network calls of its own and stores nothing outside your folder. Claude Code
-reads your files to do the work, as it does for any file in a session.
+## How it writes
 
-## Limits
+- **Plain verbs.** Built, ran, led, sold, fixed. Not "spearheaded" or "leveraged".
+- **Facts over adjectives.** It shows a result. It does not call you "passionate".
+- **Simple punctuation.** No long dashes, semicolons, or colons in sentences.
 
-- Output is always one page. Academic CVs, some government applications, and senior executive
-  resumes run longer by convention. The plugin tells you when that applies.
-- The template follows United States and Canadian practice: no photo, age, or marital status.
-- PDF rendering is tested on Linux. macOS and Windows browser detection is written but untested.
+> **Before.** Spearheaded a robust reconciliation process; leveraged Excel to drive efficiency.
+>
+> **After.** Rebuilt the monthly reconciliation in Excel and cut preparation time from 3 days to 1.
 
-## Layout
+The cover letter has four short paragraphs: the role and your strongest link to it, your evidence,
+what sets you apart, and one true reason you want this employer.
 
-| Path | Purpose |
-|---|---|
-| `.claude-plugin/` | Plugin and marketplace manifests |
-| `skills/tailor-resume/SKILL.md` | Workflow and hard rules |
-| `skills/tailor-resume/assets/` | Resume and cover letter templates, master resume and profile forms |
-| `skills/tailor-resume/references/` | Setup, field conventions, writing style, ATS method, cover letter strategy |
-| `skills/tailor-resume/scripts/build.py` | Renders HTML to PDF and runs the checks |
-| `ROADMAP.md` | Open TODOs and change log |
+## Getting past screening software
 
-To add a field or change a convention, edit `skills/tailor-resume/references/fields.md`.
+Most large employers use software, and often an AI reviewer, to rank resumes before a recruiter
+reads them. Omni handles this in three ways:
 
-## License
+- **A layout the software can read.** One column, standard headings, no tables or images.
+- **The posting's own words**, placed beside what you did, wherever your experience matches.
+- **A final check** that reads the finished PDF the way screening software does.
 
-MIT. See `LICENSE`.
+Omni refuses to hide invisible text, list skills you do not have, or add instructions meant to
+trick an AI reviewer. Employers detect these and reject the application.
+
+No tool can promise you pass. Each employer's software is different.

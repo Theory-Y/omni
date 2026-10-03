@@ -13,6 +13,8 @@ TODO list + change log. Usage lives in `README.md`, rules in `skills/tailor-resu
 
 ## Changes
 
+- 2026-10-03: README rewritten for non-technical job seekers: step-by-step setup and examples.
+  Developer details removed.
 - 2026-10-03: Published to `github.com/Theory-Y/omni` under MIT.
 - 2026-10-03: README rewritten for outside readers: first-run guide, field table, screening
   method, troubleshooting, privacy, limits.
