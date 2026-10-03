@@ -49,21 +49,21 @@ AI_TELLS = [
 LEVERAGE = r"(?<!financial )(?<!operating )leverag(?:e|ed|ing)\b(?! (?:buyout|finance|loan|ratio|recap))"
 
 
-def find_browser(folder):
-    """Return the command prefix for a Chromium-family browser, or None."""
+def find_browsers(folder):
+    """Yield a command prefix for each installed Chromium-family browser."""
     for name in PATH_NAMES:
         path = shutil.which(name)
         if path:
-            return [path]
+            yield [path]
     for path in MAC_APPS:
         if os.path.exists(path):
-            return [path]
+            yield [path]
     for base in ("PROGRAMFILES", "PROGRAMFILES(X86)", "LOCALAPPDATA"):
         root = os.environ.get(base)
         for app in WIN_APPS if root else []:
             path = os.path.join(root, app)
             if os.path.exists(path):
-                return [path]
+                yield [path]
     if shutil.which("flatpak"):
         listed = subprocess.run(
             ["flatpak", "list", "--app", "--columns=application"],
@@ -72,30 +72,34 @@ def find_browser(folder):
         for app in FLATPAK_IDS:
             if app in listed:
                 # sandbox cannot write the PDF without access to the folder
-                return ["flatpak", "run", f"--filesystem={folder}", app]
-    return None
+                yield ["flatpak", "run", f"--filesystem={folder}", app]
 
 
 def render(src, pdf, browser):
-    prefix = [browser] if browser else find_browser(src.parent)
-    if not prefix:
+    """Print src to pdf with the first browser that works. Exits when none does."""
+    pdf.unlink(missing_ok=True)  # a stale PDF must not pass the checks
+    failures = []
+    for prefix in [[browser]] if browser else find_browsers(src.parent):
+        try:
+            run = subprocess.run(
+                prefix + [
+                    "--headless", "--disable-gpu", "--no-pdf-header-footer",
+                    "--print-to-pdf-no-header", f"--print-to-pdf={pdf}", src.as_uri(),
+                ],
+                capture_output=True, encoding="utf-8", errors="replace", timeout=120,
+            )
+            reason = run.stderr.strip()[-300:] or f"exit code {run.returncode}"
+        except (OSError, subprocess.TimeoutExpired) as error:
+            reason = str(error)
+        if pdf.exists():
+            return
+        failures.append(f"{' '.join(prefix)}: {reason}")
+    if not failures:
         sys.exit(
             "ERROR no Chromium-family browser found. Install Chrome, Chromium, Edge, or Brave, "
             "or pass --browser /path/to/browser."
         )
-    pdf.unlink(missing_ok=True)  # a stale PDF must not pass the checks
-    try:
-        subprocess.run(
-            prefix + [
-                "--headless", "--disable-gpu", "--no-pdf-header-footer",
-                "--print-to-pdf-no-header", f"--print-to-pdf={pdf}", src.as_uri(),
-            ],
-            capture_output=True, timeout=120,
-        )
-    except (OSError, subprocess.TimeoutExpired) as error:
-        sys.exit(f"ERROR browser failed to run ({' '.join(prefix)}): {error}")
-    if not pdf.exists():
-        sys.exit(f"ERROR browser produced no PDF ({' '.join(prefix)})")
+    sys.exit("ERROR no browser produced a PDF\n" + "\n".join(failures))
 
 
 def visible_text(source):
