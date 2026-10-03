@@ -1,0 +1,73 @@
+<meta charset="utf-8">
+<title>{{Full Name}} Resume</title>
+<style>
+  :root { color-scheme: light; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 10.5pt; line-height: 1.3; color: #111; background: #fff;
+    max-width: 7.5in; margin: 0 auto; padding: 0.5in 0.2in;
+  }
+  @page { size: letter; margin: 0.4in 0.55in; }
+  @media print { body { padding: 0; max-width: none; } }
+  h1 { font-size: 16pt; letter-spacing: 1px; text-align: center; }
+  .contact { text-align: center; margin: 3px 0 8px; font-size: 9.8pt; }
+  .contact a { color: #111; }
+  h2 {
+    font-size: 10.5pt; text-transform: uppercase; letter-spacing: 0.5px;
+    border-bottom: 1px solid #111; margin: 6px 0 3px; padding-bottom: 1px;
+  }
+  .row { display: flex; justify-content: space-between; align-items: baseline; margin-top: 3px; }
+  .row .right { font-weight: bold; white-space: nowrap; }
+  ul { margin: 1px 0 2px 17px; }
+  li { margin-bottom: 1px; }
+  p { margin-bottom: 2px; }
+  .skills { font-size: 9.4pt; line-height: 1.28; }
+  .skills p { margin-bottom: 1px; }
+</style>
+
+<h1>{{FULL NAME}}</h1>
+<p class="contact">
+  {{City, Region}} | {{Phone}} | {{Email}} |
+  <a href="https://{{linkedin.com/in/handle}}">{{linkedin.com/in/handle}}</a>
+</p>
+
+<h2>Summary</h2>
+<p>
+{{Two or three sentences. Who the candidate is, the strongest evidence for this posting, and the exact role title sought.}}
+</p>
+
+<h2>Education</h2>
+<div class="row">
+  <span><b>{{University}}</b>, {{Degree, Major}}</span>
+  <span class="right">{{Expected May 2028}}</span>
+</div>
+<p><b>Coursework:</b> {{Course, Course, Course}}</p>
+
+<h2>Work Experience</h2>
+
+<div class="row">
+  <span><b>{{Job Title}}</b>, {{Employer}}, {{City, Region}}</span>
+  <span class="right">{{Jun 2025 - Present}}</span>
+</div>
+<ul>
+  <li>{{Verb, what was done, with what, and the measured result.}}</li>
+  <li>{{Verb, what was done, with what, and the measured result.}}</li>
+</ul>
+
+<h2>Projects and Leadership</h2>
+<div class="row">
+  <span><b>{{Project or Organization}}</b>, {{Role}}</span>
+  <span class="right">{{Sep 2024 - Apr 2025}}</span>
+</div>
+<ul>
+  <li>{{Verb, what was done, with what, and the measured result.}}</li>
+</ul>
+
+<h2>Skills</h2>
+<div class="skills">
+<p><b>{{Category}}:</b> {{skill, skill, skill}}</p>
+<p><b>{{Category}}:</b> {{skill, skill, skill}}</p>
+<p><b>Languages:</b> {{English (fluent), Language (level)}}</p>
+<p><b>Awards:</b> {{Award and year}} &nbsp;|&nbsp; {{Award and year}}</p>
+</div>

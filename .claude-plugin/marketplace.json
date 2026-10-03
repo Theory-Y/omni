@@ -1,0 +1,16 @@
+{
+  "name": "omni",
+  "version": "1.0.0",
+  "owner": {
+    "name": "Lunear01"
+  },
+  "metadata": {
+    "description": "Omni marketplace: job application bundle plugin for Claude Code."
+  },
+  "plugins": [
+    {
+      "name": "omni",
+      "source": "./"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "omni",
+  "displayName": "Omni Job Application Bundle",
+  "version": "0.1.0",
+  "description": "Tailors a one-page resume and cover letter to any job posting from the user's master resume, renders both as PDF, checks them for ATS screening, and tracks applications. Covers tech, finance, investment banking, consulting, and other fields.",
+  "author": {
+    "name": "Lunear01"
+  },
+  "repository": "https://github.com/Theory-Y/omni",
+  "license": "MIT",
+  "keywords": ["resume", "cover-letter", "job-application", "ats", "pdf"]
+}
