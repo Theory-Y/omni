@@ -4,15 +4,19 @@ TODO list + change log. Usage lives in `README.md`, rules in `skills/tailor-resu
 
 ## Open TODOs
 
-- [ ] **Real-path install test**: manifest passes `claude plugin validate`. Install through
-  `/plugin marketplace add` once and run a full tailoring from an empty workspace.
-- [ ] **macOS and Windows render test**: `build.py` browser detection is tested only on Linux with
-  Flatpak Chromium.
-- [ ] **Template label colons**: bold labels keep their colon (`Coursework:`). Decide whether the
-  no-colon rule should remove these too.
+- [ ] **Chromium on the GitHub Ubuntu runner**: `/usr/bin/chromium` printed no PDF there. Cause
+  not investigated (sandbox restriction suspected). `build.py` falls through to the next installed
+  browser, and Chrome worked. A machine with only that Chromium gets the browser's error text.
 
 ## Changes
 
+- 2026-10-03: `render-test` workflow runs `tests/test_build.py` on Linux, macOS, and Windows. All
+  three pass. `build.py` now tries every installed browser and prints each failure reason.
+- 2026-10-03: Install from GitHub verified (`omni@omni` 0.1.0 at `99d5411`). Full tailoring run
+  from an empty workspace produced both PDFs, the tracker row, and the briefing.
+- 2026-10-03: 0.1.1. Cover letters may not invent anecdotes or personal details. Runs leave no
+  temporary files in the workspace.
+- 2026-10-03: Decided: bold template labels keep their colon.
 - 2026-10-03: README rewritten for non-technical job seekers: step-by-step setup and examples.
   Developer details removed.
 - 2026-10-03: Published to `github.com/Theory-Y/omni` under MIT.
