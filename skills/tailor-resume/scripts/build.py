@@ -114,7 +114,8 @@ def pdf_text(pdf, first_page=None):
     if not shutil.which("pdftotext"):
         return None
     cmd = ["pdftotext"] + (["-f", str(first_page)] if first_page else []) + [str(pdf), "-"]
-    return subprocess.run(cmd, capture_output=True, text=True).stdout
+    # utf-8 forced: Windows decodes with the locale codepage otherwise
+    return subprocess.run(cmd, capture_output=True, encoding="utf-8", errors="replace").stdout
 
 
 def squash(text):
@@ -127,6 +128,7 @@ def main():
     parser.add_argument("--keywords", default="", help="comma-separated posting keywords")
     parser.add_argument("--browser", help="path to a Chromium-family browser")
     args = parser.parse_args()
+    sys.stdout.reconfigure(errors="replace")  # Windows consoles cannot print every character
 
     src = args.html.resolve()
     pdf = src.with_suffix(".pdf")
