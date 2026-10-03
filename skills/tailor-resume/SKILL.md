@@ -102,7 +102,8 @@ keyword is not an error. It is either a phrase to work in honestly or a gap to r
 best items from the master. A short page reads as a thin candidate.
 
 Read the final PDF with the Read tool before delivering. Check that no bullet ends on a line of one
-or two words and that nothing looks cramped.
+or two words and that nothing looks cramped. Leave no temporary files (page images, keyword lists)
+in the workspace.
 
 ## Application tracker
 

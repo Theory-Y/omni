@@ -75,7 +75,8 @@ repeating the adjective. Screening software weighs hard skills and titles far ab
 - First person, as the candidate would speak to a respected colleague.
 - Sentences vary in length. A short sentence after a long one reads as a person thinking.
 - Every paragraph contains at least one detail only this candidate could write: a number, a named
-  system, a moment.
+  system, a moment. The detail comes from the master resume or from the user. Never invent an
+  anecdote, a feeling, or a personal detail to add color.
 - Contractions follow the field. Avoid them in finance, banking, law, and consulting. One or two
   are fine elsewhere.
 - When `profile.md` names a voice sample, match its sentence length and formality.

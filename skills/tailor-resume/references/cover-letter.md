@@ -26,8 +26,9 @@ Four paragraphs, 250 to 400 words, one page in the shipped template.
    the availability from `profile.md`. Then the single strongest overlap between the user's work
    and the main problem. Start with the application itself. No warm-up sentence.
 2. **Evidence.** Two or three pieces of work mapped to the top duties. Each one says what the user
-   did, at what scale, and what came of it. Add what the resume has no room for: why a decision was
-   made, what went wrong, what the user learned. Do not copy resume bullets.
+   did, at what scale, and what came of it. Add what the resume has no room for (why a decision was
+   made, what went wrong, what the user learned) only when the master or the user supplies it. Do
+   not copy resume bullets.
 3. **Differentiator.** What this candidate brings that the other applicants probably do not: a
    second field, a language, production responsibility, a client-facing record. Address a missing
    required qualification here when the gap is obvious, in one honest sentence about how the user
