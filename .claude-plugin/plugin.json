@@ -6,6 +6,12 @@
   "author": {
     "name": "Lunear01"
   },
+  "contributors": [
+    {
+      "name": "aier9500",
+      "url": "https://github.com/aier9500"
+    }
+  ],
   "repository": "https://github.com/Theory-Y/omni",
   "license": "MIT",
   "keywords": ["resume", "cover-letter", "job-application", "ats", "pdf"]

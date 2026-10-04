@@ -11,7 +11,8 @@ TODO list + change log. Usage lives in `README.md`, rules in `skills/tailor-resu
 ## Changes
 
 - 2026-10-03: README restructured to the TheoryY Workflow layout: Pre-text, Solution, Team, run
-  steps, Under the hood. Credits Lunear01 as author and aier9500 as co-author.
+  steps, Under the hood. Credits Lunear01 as author and aier9500 as co-author, in the README and
+  `plugin.json`.
 - 2026-10-03: `render-test` workflow runs `tests/test_build.py` on Linux, macOS, and Windows. All
   three pass. `build.py` now tries every installed browser and prints each failure reason.
 - 2026-10-03: Install from GitHub verified (`omni@omni` 0.1.0 at `99d5411`). Full tailoring run
